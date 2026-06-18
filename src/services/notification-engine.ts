@@ -9,8 +9,28 @@ import {
 } from "@/lib/notifications/utils";
 import Notification from "@/models/notification.model";
 import type { INotification } from "@/models/notification.model";
-import { sendNotificationEmail } from "@/services/email-service";
+import {
+  sendDailySummary,
+  sendNotificationEmail,
+  sendWeeklyReview,
+} from "@/services/email-service";
 import { sendPushNotification } from "@/services/push-service";
+
+export type NotificationDeliveryExtras = {
+  dailySummary?: {
+    priorityTitle: string;
+    pendingActions: number;
+    suggestedFocus: string;
+  };
+  weeklyReview?: {
+    visionProgress: string;
+    actionsCompleted: number;
+    focusHours: number;
+    topAchievement: string;
+  };
+};
+
+export type SendNotificationInput = CreateNotificationInput;
 
 function resolveChannels(
   input: CreateNotificationInput,
@@ -52,6 +72,10 @@ function resolveChannels(
 
   if (input.type === "focus") {
     push = push && prefs.push.focusReminder;
+  }
+
+  if (input.type === "strategy" || input.type === "execution") {
+    push = push && prefs.push.dailyPlanning;
   }
 
   return { inApp, push, email };
@@ -109,8 +133,9 @@ export async function createNotification(
   }
 }
 
-export async function sendNotification(
-  notificationId: string
+export async function deliverNotification(
+  notificationId: string,
+  extras?: NotificationDeliveryExtras
 ): Promise<INotification | null> {
   await connectDB();
 
@@ -123,26 +148,39 @@ export async function sendNotification(
   };
 
   if (notification.channels.push && !notification.delivery.pushSent) {
-    const sent = await sendPushNotification(userId, {
-      title: notification.title,
-      body: notification.message,
-      url: notification.actionUrl,
-    });
-    if (sent) {
-      updates.pushSent = true;
-      updates.pushSentAt = new Date();
+    try {
+      const sent = await sendPushNotification(userId, {
+        title: notification.title,
+        body: notification.message,
+        url: notification.actionUrl,
+      });
+      if (sent) {
+        updates.pushSent = true;
+        updates.pushSentAt = new Date();
+      }
+    } catch (error) {
+      console.error("[Notification] Push delivery failed:", error);
     }
   }
 
   if (notification.channels.email && !notification.delivery.emailSent) {
     try {
-      const sent = await sendNotificationEmail(userId, {
-        title: notification.title,
-        message: notification.message,
-        type: notification.type as NotificationType,
-        actionUrl: notification.actionUrl,
-        relatedEntityType: notification.relatedEntity?.type,
-      });
+      let sent = false;
+
+      if (extras?.dailySummary) {
+        sent = await sendDailySummary(userId, extras.dailySummary);
+      } else if (extras?.weeklyReview) {
+        sent = await sendWeeklyReview(userId, extras.weeklyReview);
+      } else {
+        sent = await sendNotificationEmail(userId, {
+          title: notification.title,
+          message: notification.message,
+          type: notification.type as NotificationType,
+          actionUrl: notification.actionUrl,
+          relatedEntityType: notification.relatedEntity?.type,
+        });
+      }
+
       if (sent) {
         updates.emailSent = true;
         updates.emailSentAt = new Date();
@@ -163,10 +201,21 @@ export async function sendNotification(
   return notification;
 }
 
-export async function createAndSendNotification(
-  input: CreateNotificationInput
+/**
+ * Create a notification record, then deliver enabled channels (in-app, push, email).
+ */
+export async function sendNotification(
+  input: SendNotificationInput,
+  extras?: NotificationDeliveryExtras
 ): Promise<INotification | null> {
   const notification = await createNotification(input);
   if (!notification) return null;
-  return sendNotification(notification._id.toString());
+  return deliverNotification(notification._id.toString(), extras);
+}
+
+export async function createAndSendNotification(
+  input: CreateNotificationInput,
+  extras?: NotificationDeliveryExtras
+): Promise<INotification | null> {
+  return sendNotification(input, extras);
 }

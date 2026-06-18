@@ -5,7 +5,7 @@ import FocusSession from "@/models/focus-session.model";
 import Goal from "@/models/goal.model";
 import Milestone from "@/models/milestone.model";
 import Vision from "@/models/vision.model";
-import { createAndSendNotification } from "@/services/notification-engine";
+import { sendNotification } from "@/services/notification-engine";
 
 export async function analyzeWorkspace(userId: string) {
   await connectDB();
@@ -27,7 +27,7 @@ export async function analyzeWorkspace(userId: string) {
     ]);
 
   if (visions === 0) {
-    await createAndSendNotification({
+    await sendNotification({
       userId,
       type: "strategy",
       title: "Create your vision",
@@ -42,7 +42,7 @@ export async function analyzeWorkspace(userId: string) {
   }
 
   if (goals === 0) {
-    await createAndSendNotification({
+    await sendNotification({
       userId,
       type: "strategy",
       title: "Create your first goal",
@@ -56,7 +56,7 @@ export async function analyzeWorkspace(userId: string) {
   }
 
   if (goals > 0 && milestones === 0) {
-    await createAndSendNotification({
+    await sendNotification({
       userId,
       type: "execution",
       title: "Build your roadmap",
@@ -70,7 +70,7 @@ export async function analyzeWorkspace(userId: string) {
   }
 
   if (pendingActions > 0) {
-    await createAndSendNotification({
+    await sendNotification({
       userId,
       type: "execution",
       title: "Actions waiting",
@@ -82,7 +82,7 @@ export async function analyzeWorkspace(userId: string) {
   }
 
   if (recentFocus === 0 && goals > 0) {
-    await createAndSendNotification({
+    await sendNotification({
       userId,
       type: "focus",
       title: "Return to deep work",
@@ -105,7 +105,7 @@ export async function notifyAchievement(
     entityId?: string;
   }
 ) {
-  await createAndSendNotification({
+  await sendNotification({
     userId,
     type: "achievement",
     title: input.title,
@@ -125,7 +125,7 @@ export async function notifySecurityEvent(
     actionUrl?: string;
   }
 ) {
-  await createAndSendNotification({
+  await sendNotification({
     userId,
     type: "security",
     title: input.title,
@@ -138,7 +138,7 @@ export async function notifySecurityEvent(
 }
 
 export async function notifyDailyPlanning(userId: string) {
-  await createAndSendNotification({
+  await sendNotification({
     userId,
     type: "review",
     title: "Plan your day",
@@ -151,7 +151,7 @@ export async function notifyDailyPlanning(userId: string) {
 }
 
 export async function notifyEveningReview(userId: string) {
-  await createAndSendNotification({
+  await sendNotification({
     userId,
     type: "review",
     title: "Evening review",
