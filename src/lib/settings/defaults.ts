@@ -1,0 +1,26 @@
+import type { UserSettings } from "@/features/settings/types";
+
+export const DEFAULT_SETTINGS: UserSettings = {
+  workspaceName: "Personal OS",
+  startupPage: "dashboard",
+  dateFormat: "mdy",
+  timezone: "UTC",
+  weekStartDay: 1,
+  theme: "dark",
+  accentColor: "#38bdf8",
+  density: "comfortable",
+  sidebarMode: "expanded",
+  animationsEnabled: true,
+  focusDuration: 50,
+  breakReminder: true,
+  autoStartNextSession: false,
+  dailyFocusTargetHours: 2,
+  bestFocusWindow: "09:00",
+  notificationsEnabled: true,
+  dailyPlanningReminder: true,
+  goalReviewReminder: true,
+  focusReminder: true,
+  weeklyReview: true,
+  morningCheckInTime: "08:00",
+  eveningReviewTime: "20:00",
+};
