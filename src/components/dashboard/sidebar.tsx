@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   BarChart3,
   BookOpen,
@@ -9,26 +9,19 @@ import {
   Eye,
   Flag,
   LayoutDashboard,
-  LayoutGrid,
-  Plus,
+  ListTodo,
+  LogOut,
+  Milestone,
+  Settings,
   Timer,
+  X,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/providers/auth-provider";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useGoalsDialog } from "@/features/goals/components/goals-dialog-provider";
-import { useOsPermissions } from "@/features/os/components/os-permissions-provider";
-import { useVaultDialog } from "@/features/vault/components/vault-dialog-provider";
-import {
-  DASHBOARD_NAV_MAIN,
-  DASHBOARD_NAV_WORKSPACE,
+  DASHBOARD_NAV,
+  DASHBOARD_NAV_SETTINGS,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/use-ui-store";
@@ -37,257 +30,227 @@ const iconMap = {
   LayoutDashboard,
   Eye,
   Flag,
-  LayoutGrid,
+  Milestone,
+  ListTodo,
   Timer,
   BookOpen,
   BarChart3,
+  Settings,
 } as const;
 
-type NavItem = {
-  title: string;
-  href: string;
-  icon: keyof typeof iconMap;
-};
+type NavItem = (typeof DASHBOARD_NAV)[number];
+
+function isNavActive(item: NavItem, pathname: string) {
+  if (item.href === "/dashboard") {
+    return pathname === "/dashboard";
+  }
+  return pathname === item.href || pathname.startsWith(`${item.href}/`);
+}
 
 function NavLink({
   item,
   pathname,
   collapsed,
+  onNavigate,
 }: {
   item: NavItem;
   pathname: string;
   collapsed: boolean;
+  onNavigate?: () => void;
 }) {
   const Icon = iconMap[item.icon];
-  const isActive =
-    item.href === "/dashboard"
-      ? pathname === "/dashboard"
-      : pathname.startsWith(item.href);
+  const isActive = isNavActive(item, pathname);
 
   return (
     <Link
       href={item.href}
       title={collapsed ? item.title : undefined}
+      onClick={onNavigate}
       className={cn(
-        "relative flex items-center rounded-lg py-2 transition-colors",
-        collapsed ? "justify-center px-2" : "gap-3 px-3",
+        "flex items-center rounded-lg text-sm font-medium transition-colors",
+        collapsed ? "justify-center px-2.5 py-2.5" : "gap-3 px-3 py-2.5",
         isActive
-          ? "bg-primary/10 text-primary"
-          : "text-muted-foreground hover:bg-accent hover:text-foreground"
+          ? "bg-[#38BDF8]/12 text-[#38BDF8]"
+          : "text-muted-foreground hover:bg-accent/80 hover:text-foreground"
       )}
     >
-      {isActive && (
-        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-primary" />
-      )}
-      <Icon className={cn("h-4 w-4 shrink-0", isActive && "text-primary")} />
-      {!collapsed ? <span className="text-sm font-medium">{item.title}</span> : null}
+      <Icon
+        className={cn(
+          "h-[18px] w-[18px] shrink-0",
+          isActive ? "text-[#38BDF8]" : "text-muted-foreground"
+        )}
+      />
+      {!collapsed ? <span>{item.title}</span> : null}
     </Link>
   );
 }
 
-function NavSection({
+function BottomLink({
+  href,
+  icon: Icon,
   label,
-  items,
-  pathname,
   collapsed,
+  onNavigate,
 }: {
+  href: string;
+  icon: typeof Settings;
   label: string;
-  items: readonly NavItem[];
-  pathname: string;
   collapsed: boolean;
+  onNavigate?: () => void;
 }) {
+  const pathname = usePathname();
+  const isActive = pathname.startsWith(href);
+
   return (
-    <div>
-      {!collapsed ? (
-        <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {label}
-        </p>
-      ) : null}
-      <div className="space-y-0.5">
-        {items.map((item) => (
-          <NavLink
-            key={item.href}
-            item={item}
-            pathname={pathname}
-            collapsed={collapsed}
-          />
-        ))}
-      </div>
-    </div>
+    <Link
+      href={href}
+      title={collapsed ? label : undefined}
+      onClick={onNavigate}
+      className={cn(
+        "flex items-center rounded-lg text-sm font-medium transition-colors",
+        collapsed ? "justify-center px-2.5 py-2.5" : "gap-3 px-3 py-2.5",
+        isActive
+          ? "bg-[#38BDF8]/12 text-[#38BDF8]"
+          : "text-muted-foreground hover:bg-accent/80 hover:text-foreground"
+      )}
+    >
+      <Icon
+        className={cn(
+          "h-[18px] w-[18px] shrink-0",
+          isActive ? "text-[#38BDF8]" : "text-muted-foreground"
+        )}
+      />
+      {!collapsed ? <span>{label}</span> : null}
+    </Link>
   );
 }
 
 export function DashboardSidebar() {
   const pathname = usePathname();
-  const router = useRouter();
-  const { sidebarCollapsed, toggleSidebarCollapsed } = useUIStore();
-  const { setOpen: setCreateGoalOpen } = useGoalsDialog();
-  const { openNewEntry } = useVaultDialog();
-  const { vault, execution, goals, counts } = useOsPermissions();
-  const isGoalsPage = pathname.startsWith("/dashboard/goals");
+  const { logout } = useAuth();
+  const {
+    sidebarCollapsed,
+    toggleSidebarCollapsed,
+    sidebarOpen,
+    setSidebarOpen,
+  } = useUIStore();
 
-  function handleNewEntry(action: string) {
-    switch (action) {
-      case "vision":
-        router.push("/dashboard/vision");
-        break;
-      case "goal":
-        if (counts.visionCount === 0) {
-          router.push("/dashboard/vision");
-          break;
-        }
-        setCreateGoalOpen(true);
-        break;
-      case "milestone":
-        if (counts.visionCount === 0) {
-          router.push("/dashboard/vision");
-        } else if (counts.goalCount === 0) {
-          router.push("/dashboard/goals");
-        } else {
-          router.push("/dashboard/goals");
-        }
-        break;
-      case "action":
-        if (!execution.unlocked) {
-          router.push(execution.ctaHref ?? "/dashboard/goals");
-        } else {
-          router.push("/dashboard/execution");
-        }
-        break;
-      case "vault":
-        if (vault.unlocked) {
-          openNewEntry();
-        }
-        router.push("/dashboard/vault");
-        break;
+  function closeMobileSidebar() {
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setSidebarOpen(false);
     }
   }
 
+  async function handleLogout() {
+    closeMobileSidebar();
+    await logout();
+  }
+
   return (
-    <aside
-      className={cn(
-        "flex h-screen shrink-0 flex-col border-r border-border bg-surface transition-[width] duration-200",
-        sidebarCollapsed ? "w-[72px]" : "w-56"
-      )}
-    >
-      <div
+    <>
+      {sidebarOpen ? (
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      ) : null}
+
+      <aside
         className={cn(
-          "shrink-0 py-5",
-          sidebarCollapsed ? "px-2" : "px-4"
+          "fixed inset-y-0 left-0 z-50 flex h-screen shrink-0 flex-col border-r border-border bg-surface transition-[width,transform] duration-200 md:static md:translate-x-0",
+          sidebarCollapsed ? "w-[72px]" : "w-64",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
         <div
           className={cn(
-            "flex items-start gap-1",
-            sidebarCollapsed ? "flex-col items-center" : "justify-between"
+            "shrink-0 border-b border-border/60",
+            sidebarCollapsed ? "px-3 py-4" : "px-5 py-5"
           )}
         >
-          <Logo collapsed={sidebarCollapsed} showSubtitle />
-          {!sidebarCollapsed ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 shrink-0 text-muted-foreground"
-              onClick={toggleSidebarCollapsed}
-              aria-label="Collapse sidebar"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="mt-2 h-8 w-8 shrink-0 text-muted-foreground"
-              onClick={toggleSidebarCollapsed}
-              aria-label="Expand sidebar"
-            >
-              <ChevronLeft className="h-4 w-4 rotate-180" />
-            </Button>
-          )}
-        </div>
-      </div>
-
-      <nav className="min-h-0 flex-1 overflow-hidden px-3">
-        <div className="space-y-6">
-          <NavSection
-            label="Main"
-            items={DASHBOARD_NAV_MAIN as readonly NavItem[]}
-            pathname={pathname}
-            collapsed={sidebarCollapsed}
-          />
-          <NavSection
-            label="Workspace"
-            items={DASHBOARD_NAV_WORKSPACE as readonly NavItem[]}
-            pathname={pathname}
-            collapsed={sidebarCollapsed}
-          />
-        </div>
-      </nav>
-
-      <div className="shrink-0 border-t border-border p-3">
-        {isGoalsPage && !goals.unlocked ? (
-          <Button
-            asChild
+          <div
             className={cn(
-              "h-11 rounded-lg",
-              sidebarCollapsed ? "w-11 px-0" : "w-full"
+              "flex items-center",
+              sidebarCollapsed ? "flex-col gap-2" : "justify-between gap-2"
             )}
-            size={sidebarCollapsed ? "icon" : "default"}
           >
-            <Link href="/dashboard/vision" title={sidebarCollapsed ? "Create Vision" : undefined}>
-              <Plus className="h-4 w-4" />
-              {!sidebarCollapsed ? <span className="ml-2">Create Vision</span> : null}
-            </Link>
-          </Button>
-        ) : (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <Logo collapsed={sidebarCollapsed} markSize={28} />
+            <div className="flex items-center gap-0.5">
               <Button
-                className={cn(
-                  "h-11 rounded-lg",
-                  sidebarCollapsed ? "w-11 px-0" : "w-full"
-                )}
-                size={sidebarCollapsed ? "icon" : "default"}
-                title={sidebarCollapsed ? "New Entry" : undefined}
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 shrink-0 text-muted-foreground md:hidden"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Close sidebar"
               >
-                <Plus className="h-4 w-4" />
-                {!sidebarCollapsed ? <span className="ml-2">New Entry</span> : null}
+                <X className="h-4 w-4" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-52">
-              <DropdownMenuLabel>Create</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleNewEntry("vision")}>
-                Create Vision
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleNewEntry("goal")}
-                disabled={counts.visionCount === 0}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden h-8 w-8 shrink-0 text-muted-foreground md:inline-flex"
+                onClick={toggleSidebarCollapsed}
+                aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               >
-                Create Goal
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleNewEntry("milestone")}
-                disabled={counts.visionCount === 0 || counts.goalCount === 0}
-              >
-                Create Milestone
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleNewEntry("action")}
-                disabled={!execution.unlocked}
-              >
-                Create Action
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleNewEntry("vault")}
-                disabled={!vault.unlocked}
-              >
-                Create Vault Entry
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-      </div>
-    </aside>
+                <ChevronLeft
+                  className={cn(
+                    "h-4 w-4 transition-transform",
+                    sidebarCollapsed && "rotate-180"
+                  )}
+                />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <nav
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto overflow-x-hidden",
+            sidebarCollapsed ? "px-2 py-4" : "px-3 py-4"
+          )}
+        >
+          <div className="space-y-1">
+            {DASHBOARD_NAV.map((item) => (
+              <NavLink
+                key={item.id}
+                item={item}
+                pathname={pathname}
+                collapsed={sidebarCollapsed}
+                onNavigate={closeMobileSidebar}
+              />
+            ))}
+          </div>
+        </nav>
+
+        <div
+          className={cn(
+            "shrink-0 space-y-1 border-t border-border/60",
+            sidebarCollapsed ? "px-2 py-4" : "px-3 py-4"
+          )}
+        >
+          <BottomLink
+            href={DASHBOARD_NAV_SETTINGS.href}
+            icon={Settings}
+            label={DASHBOARD_NAV_SETTINGS.title}
+            collapsed={sidebarCollapsed}
+            onNavigate={closeMobileSidebar}
+          />
+          <button
+            type="button"
+            title={sidebarCollapsed ? "Logout" : undefined}
+            onClick={() => void handleLogout()}
+            className={cn(
+              "flex w-full items-center rounded-lg text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/80 hover:text-foreground",
+              sidebarCollapsed ? "justify-center px-2.5 py-2.5" : "gap-3 px-3 py-2.5"
+            )}
+          >
+            <LogOut className="h-[18px] w-[18px] shrink-0" />
+            {!sidebarCollapsed ? <span>Logout</span> : null}
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

@@ -49,7 +49,7 @@ export function QuickNotes({ notes }: QuickNotesProps) {
           <p className="break-words text-xs text-muted-foreground line-clamp-2">
             No knowledge captured yet.{" "}
             <Link href="/dashboard/vault" className="text-primary hover:underline">
-              Open Vault
+              Open Knowledge
             </Link>
           </p>
         )}

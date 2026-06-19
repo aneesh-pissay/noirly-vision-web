@@ -36,7 +36,7 @@ export function DashboardOverview() {
 
         <Card className="shrink-0 border-border bg-card px-5 py-4">
           <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-            Execution Score
+            Action Score
           </p>
           <p className="mt-1 text-3xl font-bold text-primary">84%</p>
           <Progress value={84} className="mt-2 w-28" />
@@ -157,10 +157,10 @@ export function DashboardOverview() {
         </Card>
       </div>
 
-      {/* Execution Timeline */}
+      {/* Actions Timeline */}
       <Card className="border-border bg-card">
         <CardContent className="flex items-center justify-between p-4">
-          <p className="text-sm font-medium">Execution Timeline</p>
+          <p className="text-sm font-medium">Actions Timeline</p>
           <Link
             href="/dashboard/calendar"
             className="text-xs text-primary hover:underline"

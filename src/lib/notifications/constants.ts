@@ -9,6 +9,15 @@ export const NOTIFICATION_TYPES = [
 
 export type NotificationType = (typeof NOTIFICATION_TYPES)[number];
 
+export const NOTIFICATION_TYPE_LABELS: Record<NotificationType, string> = {
+  strategy: "Strategy",
+  execution: "Actions",
+  focus: "Focus",
+  review: "Review",
+  achievement: "Achievement",
+  security: "Security",
+};
+
 export const NOTIFICATION_PRIORITIES = [
   "low",
   "normal",

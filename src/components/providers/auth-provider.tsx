@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     localStorage.removeItem("token");
     setUser(null);
-    router.replace("/login");
+    router.replace("/");
   }, [router]);
 
   const refreshUser = useCallback(async () => {

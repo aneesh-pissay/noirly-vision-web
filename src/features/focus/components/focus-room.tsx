@@ -667,7 +667,7 @@ export function FocusRoom({ data }: FocusRoomProps) {
                     onClick={() => setActionOutcome("executed")}
                   >
                     <Check className="mr-2 h-4 w-4 shrink-0" />
-                    <span className="text-sm">Mark as Executed</span>
+                    <span className="text-sm">Mark complete</span>
                   </Button>
                   <Button
                     type="button"

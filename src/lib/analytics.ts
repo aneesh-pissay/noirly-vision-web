@@ -455,7 +455,7 @@ function buildInsights(metrics: AnalyticsDashboardData["metrics"], stats: Analyt
     insights.push("Create active goals to unlock progress analytics.");
   } else if (metrics.executionScore < 50) {
     insights.push(
-      "Today's execution score is below 50%. Move planned actions into focus sessions."
+      "Today's action score is below 50%. Move planned actions into focus sessions."
     );
   } else if (metrics.deepWorkHours < 5) {
     insights.push(
@@ -463,7 +463,7 @@ function buildInsights(metrics: AnalyticsDashboardData["metrics"], stats: Analyt
     );
   } else if (metrics.vaultGrowth > 0) {
     insights.push(
-      `Vault grew ${metrics.vaultGrowth}% week-over-week with ${stats.totalVaultEntries} total entries.`
+      `Knowledge grew ${metrics.vaultGrowth}% week-over-week with ${stats.totalVaultEntries} total entries.`
     );
   } else {
     insights.push(
@@ -560,9 +560,9 @@ export async function getAnalyticsDashboardData(
     systemStability: [
       { label: "Vision", value: visionAlignment },
       { label: "Goals", value: goalProgress },
-      { label: "Execution", value: executionVelocity },
+      { label: "Actions", value: executionVelocity },
       { label: "Focus", value: focusQuality },
-      { label: "Vault", value: vaultMetrics.knowledgeAlignment },
+      { label: "Knowledge", value: vaultMetrics.knowledgeAlignment },
     ],
     goalHealth: goalHealth.map((goal) => ({
       id: goal._id.toString(),

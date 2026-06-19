@@ -1,50 +1,64 @@
 export const APP_NAME = "Noirly Vision";
 export const APP_TAGLINE = "Personal OS";
 export const APP_DESCRIPTION =
-  "A premium Strategic OS productivity platform for focused execution.";
+  "A premium Strategic OS productivity platform for focused action.";
 
-export const DASHBOARD_NAV_MAIN = [
+export const DASHBOARD_NAV = [
   {
+    id: "dashboard",
     title: "Dashboard",
     href: "/dashboard",
     icon: "LayoutDashboard",
   },
   {
+    id: "vision",
     title: "Vision",
     href: "/dashboard/vision",
     icon: "Eye",
   },
   {
+    id: "goals",
     title: "Goals",
     href: "/dashboard/goals",
     icon: "Flag",
   },
   {
-    title: "Execution",
-    href: "/dashboard/execution",
-    icon: "LayoutGrid",
+    id: "milestones",
+    title: "Milestones",
+    href: "/milestones",
+    icon: "Milestone",
   },
-] as const;
-
-export const DASHBOARD_NAV_WORKSPACE = [
   {
+    id: "actions",
+    title: "Actions",
+    href: "/dashboard/execution",
+    icon: "ListTodo",
+  },
+  {
+    id: "focus",
     title: "Focus",
     href: "/dashboard/focus",
     icon: "Timer",
   },
   {
-    title: "Vault",
+    id: "knowledge",
+    title: "Knowledge",
     href: "/dashboard/vault",
     icon: "BookOpen",
   },
   {
+    id: "analytics",
     title: "Analytics",
     href: "/dashboard/analytics",
     icon: "BarChart3",
   },
 ] as const;
 
-export const PROFILE_ROUTE = "/profile";
+/** @deprecated Use DASHBOARD_NAV */
+export const DASHBOARD_NAV_MAIN = DASHBOARD_NAV.slice(0, 5);
+
+/** @deprecated Use DASHBOARD_NAV */
+export const DASHBOARD_NAV_WORKSPACE = DASHBOARD_NAV.slice(5, 8);
 
 export const DASHBOARD_NAV_SETTINGS = {
   title: "Settings",

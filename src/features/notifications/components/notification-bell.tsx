@@ -12,7 +12,10 @@ import {
   Trash2,
   Zap,
 } from "lucide-react";
-import type { NotificationType } from "@/lib/notifications/constants";
+import {
+  NOTIFICATION_TYPE_LABELS,
+  type NotificationType,
+} from "@/lib/notifications/constants";
 import type { SerializedNotification } from "@/lib/notifications/types";
 import { isToday } from "@/lib/notifications/utils";
 import { Button } from "@/components/ui/button";
@@ -71,8 +74,8 @@ function NotificationCard({
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="text-sm font-medium">{notification.title}</p>
-              <p className="mt-0.5 text-xs capitalize text-muted-foreground">
-                {notification.type}
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {NOTIFICATION_TYPE_LABELS[notification.type] ?? notification.type}
               </p>
             </div>
             <span className="shrink-0 text-[10px] text-muted-foreground">

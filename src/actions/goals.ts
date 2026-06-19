@@ -27,7 +27,7 @@ import Vision from "@/models/vision.model";
 import type { ActionResult } from "@/types";
 import type { GoalDTO } from "@/types/goal";
 
-const GOAL_PATHS = ["/dashboard/goals", "/dashboard/vision", "/dashboard"];
+const GOAL_PATHS = ["/milestones", "/dashboard/goals", "/dashboard/vision", "/dashboard"];
 
 export async function createGoal(
   input: CreateGoalInput

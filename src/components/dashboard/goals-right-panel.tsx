@@ -77,8 +77,8 @@ export function GoalsRightPanel() {
             AI Insight
           </p>
           <p className="mt-2 text-xs italic leading-relaxed text-muted-foreground">
-            Your execution alignment is peak. Recommend shifting focus from
-            &apos;Learning&apos; to &apos;Execution&apos; to close 2 current
+            Your action alignment is peak. Recommend shifting focus from
+            &apos;Learning&apos; to &apos;Actions&apos; to close 2 current
             milestones before EOW.
           </p>
         </CardContent>

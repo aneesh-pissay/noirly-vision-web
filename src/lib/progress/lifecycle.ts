@@ -54,8 +54,8 @@ const STATUS_LABELS: Record<SystemMaturityLevel, string> = {
   EMPTY: "Create your vision",
   VISION_ACTIVE: "Vision active",
   GOAL_ACTIVE: "Building roadmap",
-  ROADMAP_ACTIVE: "Planning execution",
-  EXECUTING: "Executing",
+  ROADMAP_ACTIVE: "Planning actions",
+  EXECUTING: "Taking action",
   OPTIMIZED: "Optimizing",
 };
 
@@ -104,13 +104,13 @@ function resolveNextStep(
     case "GOAL_ACTIVE":
       return {
         title: "Create first milestone",
-        description: "Break your goal into checkpoints to unlock execution.",
+        description: "Break your goal into checkpoints to unlock actions.",
         href: "/dashboard/goals",
       };
     case "ROADMAP_ACTIVE":
       return {
         title: "Create your first action",
-        description: "Connect daily work to milestones to start executing.",
+        description: "Connect daily work to milestones to start taking action.",
         href: "/dashboard/execution",
       };
     case "EXECUTING":
@@ -122,13 +122,13 @@ function resolveNextStep(
           }
         : {
             title: "Choose an action",
-            description: "Select an action in Execution to begin.",
+            description: "Select an action in Actions to begin.",
             href: "/dashboard/execution",
           };
     case "OPTIMIZED":
       return {
         title: "Review and optimize",
-        description: "Use analytics to refine your execution rhythm.",
+        description: "Use analytics to refine your action rhythm.",
         href: "/dashboard/analytics",
       };
   }
@@ -216,13 +216,13 @@ export function areaStatusLabels(input: SystemLifecycleInput) {
         : input.hasVision
           ? "Next: create a goal"
           : "—",
-    execution:
+    actions:
       !input.hasVision
         ? "No active system"
         : input.actionCount > 0
-          ? "Executing"
+          ? "Taking action"
           : input.milestoneCount > 0
-            ? "Ready for execution"
+            ? "Ready for actions"
             : "Waiting for actions",
     focus:
       input.actionCount > 0
@@ -230,14 +230,14 @@ export function areaStatusLabels(input: SystemLifecycleInput) {
           ? "Active"
           : "No focus data yet"
         : "No focus data yet",
-    vault:
+    knowledge:
       input.completedActionCount > 0
         ? "Ready for entries"
         : input.goalCount > 0
-          ? "Waiting for execution"
+          ? "Waiting for actions"
           : input.hasVision
             ? "Waiting for goals"
-            : "Vault locked",
+            : "Knowledge locked",
     analytics: level === "OPTIMIZED" ? "Active" : "Collecting data",
   };
 }

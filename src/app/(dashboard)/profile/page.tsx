@@ -1,7 +1,5 @@
-import { ProfileOverview } from "@/components/dashboard/profile-overview";
-import { getProfilePageData } from "@/features/settings/actions/settings.actions";
+import { redirect } from "next/navigation";
 
-export default async function ProfilePage() {
-  const data = await getProfilePageData();
-  return <ProfileOverview data={data} />;
+export default function ProfilePage() {
+  redirect("/dashboard/settings?tab=Account");
 }

@@ -5,34 +5,41 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   BarChart3,
-  Calendar,
-  CheckSquare,
+  BookOpen,
   ChevronLeft,
-  FolderKanban,
+  Eye,
+  Flag,
   LayoutDashboard,
+  ListTodo,
+  Milestone,
   Settings,
+  Timer,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  DASHBOARD_NAV_MAIN,
-  DASHBOARD_NAV_WORKSPACE,
-} from "@/lib/constants";
-
-const NAV_ITEMS = [
-  ...DASHBOARD_NAV_MAIN,
-  ...DASHBOARD_NAV_WORKSPACE,
-  { title: "Settings", href: "/dashboard/settings", icon: "Settings" as const },
-];
+import { DASHBOARD_NAV, DASHBOARD_NAV_SETTINGS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/use-ui-store";
 
+const NAV_ITEMS = [
+  ...DASHBOARD_NAV,
+  {
+    id: "settings",
+    title: DASHBOARD_NAV_SETTINGS.title,
+    href: DASHBOARD_NAV_SETTINGS.href,
+    icon: "Settings" as const,
+  },
+];
+
 const iconMap = {
   LayoutDashboard,
-  CheckSquare,
-  FolderKanban,
-  Calendar,
+  Eye,
+  Flag,
+  Milestone,
+  ListTodo,
+  Timer,
+  BookOpen,
   BarChart3,
   Settings,
 } as const;
@@ -70,12 +77,15 @@ export function Sidebar() {
         {NAV_ITEMS.map((item) => {
           const Icon = iconMap[item.icon as keyof typeof iconMap];
           const isActive =
-            pathname === item.href ||
-            (item.href !== "/dashboard" && pathname.startsWith(item.href));
+            item.id === "milestones"
+              ? pathname === "/milestones" || pathname.startsWith("/milestones/")
+              : item.href === "/dashboard"
+                ? pathname === "/dashboard"
+                : pathname.startsWith(item.href);
 
           return (
             <Link
-              key={item.href}
+              key={item.id}
               href={item.href}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",

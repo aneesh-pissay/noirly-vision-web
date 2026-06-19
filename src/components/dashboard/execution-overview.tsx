@@ -122,7 +122,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
     progress?: number;
   }[] = [
     {
-      label: "Execution Score",
+      label: "Action Score",
       value: formatProgressDisplay(executionDisplay),
       sub:
         data.stats.totalActions === 0
@@ -152,7 +152,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
       value:
         data.stats.totalActions > 0
           ? `${data.stats.alignmentScore}%`
-          : "Ready for execution",
+          : "Ready for actions",
       sub: "Vision synergy",
     },
   ];
@@ -185,7 +185,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Execution</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Actions</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Turn strategy into focused daily progress.
           </p>
@@ -279,7 +279,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
                 </div>
               )}
               <p className="mt-3 text-xs font-medium text-chart-3">
-                Today&apos;s Execution: On Track
+                Today&apos;s Actions: On Track
               </p>
             </div>
           </div>
@@ -304,7 +304,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
               <KanbanCard key={action.title} {...action} />
             ))}
           </KanbanColumn>
-          <KanbanColumn title="Executed" count={executedActions.length}>
+          <KanbanColumn title="Completed" count={executedActions.length}>
             {executedActions.map((action) => (
               <KanbanCard
                 key={action.title}
@@ -353,7 +353,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
 
         <Card className="border-border bg-card">
           <CardContent className="p-5">
-            <h3 className="text-sm font-semibold">Execution Alignment</h3>
+            <h3 className="text-sm font-semibold">Action Alignment</h3>
             <div className="mt-4 space-y-4">
               {alignmentAreas.map((area) => (
                 <div key={area.label}>

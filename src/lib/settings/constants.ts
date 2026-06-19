@@ -5,6 +5,13 @@ export const STARTUP_PAGES = [
   "focus",
 ] as const;
 
+export const STARTUP_PAGE_LABELS: Record<(typeof STARTUP_PAGES)[number], string> = {
+  dashboard: "Dashboard",
+  vision: "Vision",
+  execution: "Actions",
+  focus: "Focus",
+};
+
 export const DATE_FORMATS = ["mdy", "dmy", "ymd"] as const;
 
 export const DATE_FORMAT_LABELS: Record<(typeof DATE_FORMATS)[number], string> = {
@@ -42,6 +49,7 @@ export const ACCENT_COLORS = [
 ] as const;
 
 export const SETTINGS_TABS = [
+  "Account",
   "Workspace",
   "Preferences",
   "Focus",

@@ -13,14 +13,14 @@ export function FinalCTA() {
         viewport={{ once: true }}
         className="mx-auto max-w-3xl rounded-2xl border border-border bg-card px-8 py-14 text-center"
       >
-        <h2 className="text-3xl font-bold tracking-tight">
+        <h2 className="hyphens-none text-balance text-3xl font-bold tracking-tight">
           Build your personal operating system
         </h2>
-        <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-muted-foreground">
           Start with a vision. Connect your goals. Execute every day.
         </p>
         <Button asChild size="lg" className="mt-8 rounded-lg px-8 noirly-glow">
-          <Link href="/register">Start Building</Link>
+          <Link href="/register">Create Your Vision</Link>
         </Button>
       </motion.div>
     </section>

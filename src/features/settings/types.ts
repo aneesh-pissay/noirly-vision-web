@@ -51,11 +51,6 @@ export interface WorkspaceStats {
   vaultEntries: number;
 }
 
-export interface ProfilePageData {
-  profile: SettingsProfile;
-  activeVisionTitle: string | null;
-}
-
 export interface SettingsPageData {
   settings: UserSettings;
   notificationPreferences: NotificationPreferencesData;

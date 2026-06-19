@@ -4,7 +4,7 @@ import type { NotificationPreferencesData } from "@/lib/notifications/types";
 import type { SettingsPageData, UserSettings } from "@/features/settings/types";
 import type { BackupPreview, ImportSummary } from "@/lib/backup/types";
 import { formatImportSummaryLines } from "@/lib/backup/utils";
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -37,6 +37,7 @@ import {
   FOCUS_DURATIONS,
   SETTINGS_TABS,
   STARTUP_PAGES,
+  STARTUP_PAGE_LABELS,
   WEEK_START_LABELS,
   type SettingsTab,
 } from "@/lib/settings/constants";
@@ -57,8 +58,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { registerFcmToken } from "@/lib/firebase/firebase-client";
+import { SettingsAccountTab } from "@/components/dashboard/settings-account-tab";
 import { cn } from "@/lib/utils";
+import { registerFcmToken } from "@/lib/firebase/firebase-client";
 
 function downloadTextFile(content: string, filename: string, mime: string) {
   const blob = new Blob([content], { type: mime });
@@ -95,7 +97,7 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
   const router = useRouter();
   const { logout } = useAuth();
   const [isPending, startTransition] = useTransition();
-  const [activeTab, setActiveTab] = useState<SettingsTab>("Workspace");
+  const [activeTab, setActiveTab] = useState<SettingsTab>("Account");
   const [settings, setSettings] = useState<UserSettings>(data.settings);
   const [notificationPreferences, setNotificationPreferences] =
     useState<NotificationPreferencesData>(data.notificationPreferences);
@@ -146,6 +148,14 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
     [data.workspaceStats]
   );
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab");
+    if (tab && SETTINGS_TABS.includes(tab as SettingsTab)) {
+      setActiveTab(tab as SettingsTab);
+    }
+  }, []);
+
   function runSave(action: () => Promise<{ success: boolean; error?: string }>) {
     startTransition(async () => {
       const result = await action();
@@ -185,6 +195,8 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
           ))}
         </div>
       </div>
+
+      {activeTab === "Account" && <SettingsAccountTab data={data} />}
 
       {activeTab === "Workspace" && (
         <div className="space-y-4">
@@ -238,8 +250,8 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
                   </SelectTrigger>
                   <SelectContent>
                     {STARTUP_PAGES.map((page) => (
-                      <SelectItem key={page} value={page} className="capitalize">
-                        {page}
+                      <SelectItem key={page} value={page}>
+                        {STARTUP_PAGE_LABELS[page]}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -1042,7 +1054,7 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
           >
             <DangerZone
               title="Reset workspace data"
-              description="Clears vision, goals, milestones, actions, focus sessions, vault entries, and analytics. Your account and settings are kept."
+              description="Clears vision, goals, milestones, actions, focus sessions, knowledge entries, and analytics. Your account and settings are kept."
             >
               <Button
                 variant="destructive"
@@ -1265,7 +1277,7 @@ export function SettingsOverview({ data }: { data: SettingsPageData }) {
             <DialogTitle>Reset workspace data?</DialogTitle>
             <DialogDescription>
               This permanently deletes all visions, goals, milestones, actions,
-              focus sessions, and vault entries.
+              focus sessions, and knowledge entries.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">

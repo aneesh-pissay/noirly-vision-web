@@ -21,7 +21,7 @@ const insights = [
   },
   {
     icon: Clock,
-    title: "Execution Pattern",
+    title: "Actions Pattern",
     highlight: "Morning Peak",
     description: "80% of high-impact tasks completed before 12:00 PM.",
     color: "text-chart-4",

@@ -57,7 +57,7 @@ export function VaultIntelligencePanel({ data }: VaultIntelligencePanelProps) {
         <div className="flex min-w-0 items-center gap-2">
           <Sparkles className="h-4 w-4 shrink-0 text-primary" />
           <h2 className="truncate text-sm font-semibold text-primary">
-            Vault Intelligence
+            Knowledge Intelligence
           </h2>
         </div>
 
@@ -91,7 +91,7 @@ export function VaultIntelligencePanel({ data }: VaultIntelligencePanelProps) {
       <div className="flex min-w-0 items-center gap-2">
         <Sparkles className="h-4 w-4 shrink-0 text-primary" />
         <h2 className="truncate text-sm font-semibold text-primary">
-          Vault Intelligence
+          Knowledge Intelligence
         </h2>
       </div>
 

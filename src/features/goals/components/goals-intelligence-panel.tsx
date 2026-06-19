@@ -32,7 +32,7 @@ export function GoalsIntelligencePanel({ data }: GoalsIntelligencePanelProps) {
           <CardContent className="p-4">
             <p className="truncate text-sm font-semibold">No goals connected yet</p>
             <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground line-clamp-2">
-              Create your first goal to unlock alignment tracking and execution
+              Create your first goal to unlock alignment tracking and actions
               connection.
             </p>
           </CardContent>

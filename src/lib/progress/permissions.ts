@@ -27,6 +27,7 @@ export type FeatureLockDisplay = {
 export type OsPermissions = {
   counts: OsCounts;
   goals: FeatureLockDisplay;
+  milestones: FeatureLockDisplay;
   vault: VaultLockDisplay;
   execution: FeatureLockDisplay;
   focus: FeatureLockDisplay;
@@ -36,6 +37,31 @@ export type OsPermissions = {
   checklist: SystemChecklist;
   setupProgress: number;
 };
+
+export function resolveMilestonesLock(counts: OsCounts): FeatureLockDisplay {
+  const unlocked = counts.visionCount > 0 && counts.goalCount > 0;
+
+  if (!unlocked && counts.visionCount === 0) {
+    return {
+      unlocked: false,
+      title: "Milestones locked",
+      message:
+        "Create your vision first. Milestones break goals into checkpoints.",
+      ctaLabel: "Create Vision",
+      ctaHref: "/dashboard/vision",
+    };
+  }
+
+  return {
+    unlocked,
+    title: unlocked ? "Milestones active" : "Milestones locked",
+    message: unlocked
+      ? "Break goals into measurable checkpoints."
+      : "Create a goal first. Milestones break goals into checkpoints.",
+    ctaLabel: unlocked ? null : "Go to Goals",
+    ctaHref: unlocked ? null : "/dashboard/goals",
+  };
+}
 
 export function resolveGoalsLock(counts: OsCounts): FeatureLockDisplay {
   const unlocked = counts.visionCount > 0;
@@ -56,9 +82,9 @@ export function resolveVaultLock(counts: OsCounts): VaultLockDisplay {
     return {
       state: "locked_no_vision",
       unlocked: false,
-      title: "Vault locked",
+      title: "Knowledge locked",
       message:
-        "Create your vision and execute actions before capturing knowledge.",
+        "Create your vision and complete actions before capturing knowledge.",
       ctaLabel: "Create Vision",
       ctaHref: "/dashboard/vision",
     };
@@ -79,10 +105,10 @@ export function resolveVaultLock(counts: OsCounts): VaultLockDisplay {
     return {
       state: "waiting_for_execution",
       unlocked: false,
-      title: "Waiting for execution",
+      title: "Waiting for actions",
       message:
         "Complete actions and focus sessions to generate knowledge.",
-      ctaLabel: "Go to Execution",
+      ctaLabel: "Go to Actions",
       ctaHref: "/dashboard/execution",
     };
   }
@@ -90,7 +116,7 @@ export function resolveVaultLock(counts: OsCounts): VaultLockDisplay {
   return {
     state: "unlocked",
     unlocked: true,
-    title: "Vault active",
+    title: "Knowledge active",
     message: "Capture knowledge from completed work.",
     ctaLabel: null,
     ctaHref: null,
@@ -102,12 +128,12 @@ export function resolveExecutionLock(counts: OsCounts): FeatureLockDisplay {
 
   return {
     unlocked,
-    title: unlocked ? "Execution active" : "Execution locked",
+    title: unlocked ? "Actions active" : "Actions locked",
     message: unlocked
       ? "Plan and complete actions from your milestones."
       : "Create milestones on your goals before planning actions.",
-    ctaLabel: unlocked ? null : "Create Milestone",
-    ctaHref: unlocked ? null : "/dashboard/goals",
+    ctaLabel: unlocked ? null : "Go to Milestones",
+    ctaHref: unlocked ? null : "/milestones",
   };
 }
 
@@ -119,8 +145,8 @@ export function resolveFocusLock(counts: OsCounts): FeatureLockDisplay {
     title: unlocked ? "Focus ready" : "Focus locked",
     message: unlocked
       ? "Start a session linked to an action."
-      : "Create actions in Execution before starting focus sessions.",
-    ctaLabel: unlocked ? null : "Go to Execution",
+      : "Create actions before starting focus sessions.",
+    ctaLabel: unlocked ? null : "Go to Actions",
     ctaHref: unlocked ? null : "/dashboard/execution",
   };
 }
@@ -150,6 +176,7 @@ export function resolveOsPermissions(counts: OsCounts): OsPermissions {
   return {
     counts,
     goals: resolveGoalsLock(counts),
+    milestones: resolveMilestonesLock(counts),
     vault: resolveVaultLock(counts),
     execution: resolveExecutionLock(counts),
     focus: resolveFocusLock(counts),

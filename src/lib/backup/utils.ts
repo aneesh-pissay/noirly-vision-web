@@ -92,7 +92,7 @@ export function formatImportSummaryLines(
   }
   if (summary.vaultEntries > 0) {
     lines.push(
-      `${summary.vaultEntries} Vault Entr${summary.vaultEntries === 1 ? "y" : "ies"}`
+      `${summary.vaultEntries} Knowledge Entr${summary.vaultEntries === 1 ? "y" : "ies"}`
     );
   }
 

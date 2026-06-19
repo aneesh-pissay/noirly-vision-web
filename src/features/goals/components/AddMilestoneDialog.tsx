@@ -94,7 +94,7 @@ export function AddMilestoneDialog({
           <DialogTitle>Add Milestone</DialogTitle>
           <DialogDescription>
             Break <span className="font-medium">{goalTitle}</span> into measurable
-            checkpoints that connect to execution.
+            checkpoints that connect to actions.
           </DialogDescription>
         </DialogHeader>
 

@@ -106,7 +106,7 @@ export function DashboardOverview({ data }: { data: DashboardPageData }) {
 
         <Card className="shrink-0 border-border bg-card px-5 py-4">
           <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-            Execution Score
+            Action Score
           </p>
           <p className="mt-1 text-3xl font-bold text-primary">
             {formatProgressDisplay(executionDisplay)}

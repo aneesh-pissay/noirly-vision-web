@@ -55,7 +55,7 @@ export function VisionInsights({ vision }: VisionInsightsProps) {
       <CardContent className="p-6">
         <h3 className="text-sm font-semibold">Vision Progress</h3>
         <p className="mt-1 text-xs text-muted-foreground">
-          Execution metrics across goals connected to this vision.
+          Action metrics across goals connected to this vision.
         </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

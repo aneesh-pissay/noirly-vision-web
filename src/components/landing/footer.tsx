@@ -9,18 +9,8 @@ const legalLinks = [
 export function LandingFooter() {
   return (
     <footer className="border-t border-border/50 px-6 py-12">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-md">
-          <BrandLogo />
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            A personal OS for defining vision, executing daily, and learning
-            continuously.
-          </p>
-          <p className="mt-6 text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Noirly Vision. All rights
-            reserved.
-          </p>
-        </div>
+      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
+        <BrandLogo />
 
         <nav className="flex items-center gap-8">
           {legalLinks.map((link) => (

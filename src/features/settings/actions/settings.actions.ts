@@ -38,7 +38,7 @@ import Settings from "@/models/settings.model";
 import User, { getUserDisplayName } from "@/models/user.model";
 import VaultEntry from "@/models/vault-entry.model";
 import Vision from "@/models/vision.model";
-import type { ProfilePageData, SettingsPageData } from "@/features/settings/types";
+import type { SettingsPageData } from "@/features/settings/types";
 import type { ActionResult } from "@/types";
 
 async function upsertSettings(
@@ -50,32 +50,6 @@ async function upsertSettings(
     { $set: update },
     { upsert: true, new: true }
   );
-}
-
-export async function getProfilePageData(): Promise<ProfilePageData> {
-  const userId = await requireSessionUserId();
-  await connectDB();
-
-  const [vision, user] = await Promise.all([
-    Vision.findOne({ userId, status: "ACTIVE" }).select("title").lean(),
-    User.findById(userId)
-      .select(
-        "username firstName lastName email avatar identityTitle role createdAt"
-      )
-      .lean(),
-  ]);
-
-  return {
-    profile: {
-      displayName: user ? getUserDisplayName(user) : "User",
-      username: user?.username ?? "",
-      email: user?.email ?? "",
-      role: user?.role ?? "user",
-      identityTitle: user?.identityTitle ?? "",
-      avatar: user?.avatar ?? null,
-    },
-    activeVisionTitle: vision?.title ?? null,
-  };
 }
 
 export async function getSettingsPageData(): Promise<SettingsPageData> {
@@ -167,7 +141,7 @@ export async function updateProfile(
     });
 
     revalidatePath("/dashboard/settings");
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/settings");
     revalidatePath("/dashboard", "layout");
     return success(undefined);
   } catch {
@@ -186,7 +160,7 @@ export async function updateAvatar(
     await connectDB();
     await User.findByIdAndUpdate(userId, { avatar: parsed.data.avatar });
     revalidatePath("/dashboard/settings");
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/settings");
     revalidatePath("/dashboard", "layout");
     return success(undefined);
   } catch {

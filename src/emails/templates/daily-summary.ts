@@ -28,7 +28,7 @@ export function buildDailySummaryEmail(input: {
       greeting: input.greeting,
       bodyHtml,
       actionUrl: `${APP_URL}/dashboard/execution`,
-      actionLabel: "Open Execution",
+      actionLabel: "Open Actions",
       footerNote: "You can adjust daily summary emails in Settings → Notifications.",
     }),
   };

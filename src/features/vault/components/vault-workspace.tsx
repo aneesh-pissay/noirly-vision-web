@@ -98,7 +98,7 @@ export function VaultWorkspace({ data }: VaultWorkspaceProps) {
 
             ? "Start capturing knowledge"
 
-            : "Unlock after execution",
+            : "Unlock after actions",
 
     },
 
@@ -156,7 +156,7 @@ export function VaultWorkspace({ data }: VaultWorkspaceProps) {
 
         <div className="min-w-0">
 
-          <h1 className="text-2xl font-semibold tracking-tight">Vault</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Knowledge</h1>
 
           <p className="mt-1 text-sm text-muted-foreground">
 

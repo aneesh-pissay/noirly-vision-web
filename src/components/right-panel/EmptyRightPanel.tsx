@@ -102,7 +102,7 @@ export function EmptyRightPanel({
             Getting Started
           </p>
           <p className="mt-2 break-words text-xs leading-relaxed text-muted-foreground line-clamp-2">
-            Noirly connects your vision, goals and execution into one system.
+            Noirly connects Vision → Goals → Milestones → Actions → Focus → Knowledge.
           </p>
         </CardContent>
       </Card>

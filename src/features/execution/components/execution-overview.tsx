@@ -49,7 +49,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
 
   const stats = [
     {
-      label: "Execution Score",
+      label: "Action Score",
       value: formatProgressDisplay(executionDisplay),
       sub: todaySub,
     },
@@ -86,7 +86,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
       value:
         data.stats.totalActions > 0
           ? `${data.stats.alignmentScore}%`
-          : "Ready for execution",
+          : "Ready for actions",
       sub: alignmentSub,
     },
   ];
@@ -94,7 +94,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
   const mission = data.mission;
   const executionLabel =
     data.stats.totalActions === 0
-      ? "Ready for execution"
+      ? "Ready for actions"
       : data.stats.todayMomentum !== null && data.stats.todayMomentum >= 75
         ? "On Track"
         : data.stats.todayMomentum !== null && data.stats.todayMomentum >= 40
@@ -105,7 +105,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Execution</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Actions</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Turn strategy into focused daily progress.
           </p>
@@ -183,7 +183,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
               <p className="mt-1 text-xs text-muted-foreground">
                 {mission
                   ? "Highest priority active action in your pipeline."
-                  : "Add an action to execution to set today's mission."}
+                  : "Add an action to set today's mission."}
               </p>
               {mission && (
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -286,7 +286,7 @@ export function ExecutionOverview({ data }: { data: ExecutionPageData }) {
 
         <Card className="border-border bg-card">
           <CardContent className="p-5">
-            <h3 className="text-sm font-semibold">Execution Alignment</h3>
+            <h3 className="text-sm font-semibold">Action Alignment</h3>
             <p className="mt-1 text-xs text-muted-foreground">
               Share of actions connected to active goals.
             </p>

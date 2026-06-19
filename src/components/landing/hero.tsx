@@ -16,25 +16,24 @@ export function Hero() {
       <div className="absolute inset-0 noirly-gradient" />
       <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+      <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
+          className="hyphens-none text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
         >
-          Turn your vision into{" "}
-          <span className="text-primary">execution</span>
+          <span className="whitespace-nowrap">Turn your vision into</span>{" "}
+          <span className="whitespace-nowrap text-primary">execution</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
+          className="mx-auto mt-6 max-w-3xl text-pretty text-base text-muted-foreground sm:text-lg"
         >
-          Define your vision. Break it into goals. Execute daily. Learn
-          continuously.
+          Define your vision. Build goals. Take focused action. Improve every day.
         </motion.p>
 
         <motion.div

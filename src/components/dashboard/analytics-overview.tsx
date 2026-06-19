@@ -59,7 +59,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
         : "Metrics unlock as activity grows",
     },
     {
-      label: "Execution Rate",
+      label: "Action Rate",
       value: formatProgressDisplay(
         analyticsMetricDisplay(data.metrics.executionScore, hasActions && hasRealData)
       ),
@@ -80,7 +80,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
       sub: hasFocus ? "Weekly session average" : "Collecting data",
     },
     {
-      label: "Vault Growth",
+      label: "Knowledge Growth",
       value: hasVault
         ? hasVaultTrend
           ? `${data.metrics.vaultGrowth > 0 ? "+" : ""}${data.metrics.vaultGrowth}%`
@@ -119,7 +119,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Analytics</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Measure progress. Understand patterns. Improve execution.
+            Measure progress. Understand patterns. Improve your workflow.
           </p>
           <div className="mt-4 flex gap-6 border-b border-border">
             {tabs.map((tab) => (
@@ -211,7 +211,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
                 const pillarHasData =
                   (pillar.label === "Vision" || pillar.label === "Goals")
                     ? hasEnoughForGoalMetrics
-                    : pillar.label === "Execution"
+                    : pillar.label === "Actions"
                       ? hasActions
                       : pillar.label === "Focus"
                         ? hasFocus
@@ -315,7 +315,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
         </Card>
       </div>
 
-      {/* Goal Health + Vault Growth */}
+      {/* Goal Health + Knowledge Growth */}
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="border-border bg-card">
           <CardContent className="p-5">
@@ -363,7 +363,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
 
         <Card className="border-border bg-card">
           <CardContent className="p-5">
-            <h3 className="text-sm font-semibold">Vault Growth</h3>
+            <h3 className="text-sm font-semibold">Knowledge Growth</h3>
             <div className="mt-4 grid grid-cols-3 gap-4">
               <div>
                 <p className="text-[10px] text-muted-foreground">Total Entries</p>
@@ -390,7 +390,7 @@ export function AnalyticsOverview({ data }: { data: AnalyticsPageData }) {
               </p>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 {data.insights[0] ??
-                  "Create vault entries and link them to goals to strengthen knowledge alignment."}
+                  "Create knowledge entries and link them to goals to strengthen knowledge alignment."}
               </p>
             </div>
           </CardContent>

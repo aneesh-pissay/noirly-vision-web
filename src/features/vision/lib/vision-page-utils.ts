@@ -104,7 +104,7 @@ export function resolveVisionNextStep(
     if (goalMilestones.length === 0) {
       return {
         title: "Create your first milestone",
-        description: `Break "${goal.title}" into executable checkpoints.`,
+        description: `Break "${goal.title}" into actionable checkpoints.`,
       };
     }
 

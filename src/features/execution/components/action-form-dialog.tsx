@@ -134,7 +134,7 @@ export function ActionFormDialog({
         <DialogHeader>
           <DialogTitle>New Action</DialogTitle>
           <DialogDescription>
-            Connect execution to a goal and choose how you will work on it.
+            Connect this action to a goal and choose how you will work on it.
           </DialogDescription>
         </DialogHeader>
 

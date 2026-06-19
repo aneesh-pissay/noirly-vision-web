@@ -410,7 +410,7 @@ export function CreateGoalDialog({ open, onOpenChange }: CreateGoalDialogProps) 
               <DialogTitle>Add Milestones</DialogTitle>
               <DialogDescription>
                 Break <span className="font-medium">{createdGoal?.title}</span>{" "}
-                into checkpoints you can execute against.
+                into checkpoints you can act on.
               </DialogDescription>
             </DialogHeader>
 

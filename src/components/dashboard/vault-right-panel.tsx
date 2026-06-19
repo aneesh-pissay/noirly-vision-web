@@ -14,7 +14,7 @@ const learningBalance = [
 export function VaultRightPanel() {
   return (
     <aside className="relative hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-border bg-background p-4 pb-20 xl:flex">
-      <h2 className="text-sm font-semibold">Vault Insights</h2>
+      <h2 className="text-sm font-semibold">Knowledge Insights</h2>
 
       <Card className="border-border bg-card">
         <CardContent className="flex gap-3 p-4">

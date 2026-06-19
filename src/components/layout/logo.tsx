@@ -33,6 +33,7 @@ export function LogoMark({
 interface LogoProps {
   collapsed?: boolean;
   showSubtitle?: boolean;
+  markSize?: number;
   className?: string;
   href?: string;
 }
@@ -40,6 +41,7 @@ interface LogoProps {
 export function Logo({
   collapsed = false,
   showSubtitle = false,
+  markSize = 32,
   className,
   href = "/dashboard",
 }: LogoProps) {
@@ -53,11 +55,11 @@ export function Logo({
       )}
       aria-label={APP_NAME}
     >
-      <LogoMark size={32} priority />
+      <LogoMark size={markSize} priority />
       {!collapsed && (
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold leading-tight tracking-tight text-foreground">
-            Noirly <span className="text-primary">Vision</span>
+            {APP_NAME}
           </p>
           {showSubtitle ? (
             <p className="truncate text-xs text-muted-foreground">{APP_TAGLINE}</p>

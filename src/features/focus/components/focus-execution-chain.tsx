@@ -30,7 +30,7 @@ export function FocusExecutionChain({
       )}
     >
       <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-        Execution Chain
+        Action Chain
       </p>
       <div className="mt-3 space-y-2">
         {steps.map((step, index) => (

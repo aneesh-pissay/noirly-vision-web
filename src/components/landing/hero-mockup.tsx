@@ -1,31 +1,15 @@
-import { ArrowRight } from "lucide-react";
-
-const workflow = [
-  {
-    step: "Vision",
-    detail: "Become your best version",
-  },
-  {
-    step: "Goal",
-    detail: "Build measurable progress",
-  },
-  {
-    step: "Action",
-    detail: "Execute today",
-  },
-  {
-    step: "Focus",
-    detail: "Protect deep work",
-  },
-  {
-    step: "Vault",
-    detail: "Capture learning",
-  },
+const workflowSteps = [
+  { title: "Vision", subtitle: "Direction" },
+  { title: "Goals", subtitle: "Targets" },
+  { title: "Milestones", subtitle: "Checkpoints" },
+  { title: "Actions", subtitle: "Execute" },
+  { title: "Focus", subtitle: "Deep Work" },
+  { title: "Knowledge", subtitle: "Learn" },
 ] as const;
 
 export function HeroMockup() {
   return (
-    <div className="relative mx-auto mt-16 max-w-4xl">
+    <div className="relative mx-auto mt-16 w-full max-w-5xl">
       <div className="absolute inset-0 -z-10 rounded-3xl bg-primary/10 blur-3xl" />
       <div className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl noirly-glow">
         <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
@@ -41,24 +25,31 @@ export function HeroMockup() {
 
         <div className="p-6 sm:p-8">
           <p className="text-sm font-medium text-muted-foreground">
-            How your personal OS connects
+            How your system connects
           </p>
-          <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-            {workflow.map((item, index) => (
-              <div key={item.step} className="flex items-center gap-3 sm:contents">
-                <div className="min-w-0 flex-1 rounded-xl border border-border bg-surface px-4 py-3 text-left">
-                  <p className="text-sm font-semibold text-foreground">
-                    {item.step}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {item.detail}
-                  </p>
+          <div className="mt-6 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="mx-auto flex w-max min-w-full items-start justify-center gap-1.5 px-1 sm:gap-2">
+              {workflowSteps.map((step, index) => (
+                <div key={step.title} className="flex items-start">
+                  {index > 0 ? (
+                    <span
+                      className="mx-1.5 shrink-0 pt-1 text-sm text-primary/70 sm:mx-2"
+                      aria-hidden
+                    >
+                      →
+                    </span>
+                  ) : null}
+                  <div className="shrink-0 text-center">
+                    <p className="whitespace-nowrap text-sm font-semibold text-foreground">
+                      {step.title}
+                    </p>
+                    <p className="mt-0.5 whitespace-nowrap text-[10px] text-muted-foreground sm:text-xs">
+                      {step.subtitle}
+                    </p>
+                  </div>
                 </div>
-                {index < workflow.length - 1 ? (
-                  <ArrowRight className="hidden h-4 w-4 shrink-0 text-primary/70 sm:block" />
-                ) : null}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

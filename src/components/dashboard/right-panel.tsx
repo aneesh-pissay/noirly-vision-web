@@ -14,14 +14,14 @@ const insights = [
   {
     icon: Lightbulb,
     title: "Peak Performance",
-    description: "Your strongest execution window: 9 AM – 11 AM",
+    description: "Your strongest focus window: 9 AM – 11 AM",
     color: "text-chart-4",
     bg: "bg-chart-4/10",
   },
   {
     icon: Calendar,
     title: "Consistency",
-    description: "Plan executed 5/7 days this week",
+    description: "Plan completed 5/7 days this week",
     color: "text-chart-3",
     bg: "bg-chart-3/10",
   },

@@ -192,7 +192,7 @@ export function ActionPipeline({
   const columns: PipelineColumn[] = [
     { key: "PLANNED", title: "Planned", items: planned },
     { key: "IN_PROGRESS", title: "In Progress", items: inProgress },
-    { key: "EXECUTED", title: "Executed", items: executed },
+    { key: "EXECUTED", title: "Completed", items: executed },
   ];
 
   async function moveAction(actionId: string, status: ActionStatus) {

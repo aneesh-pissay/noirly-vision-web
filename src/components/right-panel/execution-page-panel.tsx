@@ -16,7 +16,7 @@ export function ExecutionPagePanel({ intelligence }: ExecutionPagePanelProps) {
 
   return (
 
-    <StrategicIntelligencePanel title="Execution Guidance" intelligence={intelligence} />
+    <StrategicIntelligencePanel title="Actions Guidance" intelligence={intelligence} />
 
   );
 

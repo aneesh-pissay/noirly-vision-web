@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <LegalSection title="1. Overview">
         <p>
           Noirly Vision is a personal operating system for organizing your
-          vision, goals, daily execution, focus sessions, and knowledge. This
+          vision, goals, daily actions, focus sessions, and knowledge. This
           policy explains what we store and how we use it in this early version
           of the product.
         </p>
@@ -26,9 +26,9 @@ export default function PrivacyPage() {
         <ul className="list-disc space-y-2 pl-5">
           <li>Account information such as your name and email</li>
           <li>Visions and goals you create</li>
-          <li>Actions, milestones, and execution plans</li>
+          <li>Actions, milestones, and action plans</li>
           <li>Focus session history</li>
-          <li>Knowledge vault entries</li>
+          <li>Knowledge entries</li>
           <li>Preferences and workspace settings</li>
         </ul>
       </LegalSection>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
       <LegalSection title="4. Data Ownership">
         <p>
           You own the personal content you create in Noirly Vision, including
-          your visions, goals, actions, focus records, and vault entries. We
+          your visions, goals, actions, focus records, and knowledge entries. We
           store this content so the product can work for you.
         </p>
       </LegalSection>

@@ -30,7 +30,7 @@ export async function createVaultEntry(
   return runMutation({
     schema: createVaultEntrySchema,
     input,
-    errorMessage: "Failed to create vault entry",
+    errorMessage: "Failed to create knowledge entry",
     revalidatePaths: VAULT_PATHS,
     handler: async ({ userId, input: data }) => {
       const permissions = resolveOsPermissions(await loadOsCounts(userId));
@@ -58,7 +58,7 @@ export async function getVaultEntry(
   return runQuery({
     schema: getVaultEntrySchema,
     input,
-    errorMessage: "Failed to get vault entry",
+    errorMessage: "Failed to get knowledge entry",
     handler: async ({ userId, input: data }) => {
       const filter: Record<string, unknown> = { userId };
       if (data.id) filter._id = data.id;
@@ -77,7 +77,7 @@ export async function updateVaultEntry(
   return runMutation({
     schema: updateVaultEntrySchema,
     input,
-    errorMessage: "Failed to update vault entry",
+    errorMessage: "Failed to update knowledge entry",
     revalidatePaths: VAULT_PATHS,
     handler: async ({ userId, input: data }) => {
       const { id: entryId, linkedVision, linkedGoal, linkedAction, linkedFocusSession, ...fields } =
@@ -101,7 +101,7 @@ export async function updateVaultEntry(
       ).lean();
 
       if (!entry) {
-        throw new Error("Vault entry not found");
+        throw new Error("Knowledge entry not found");
       }
 
       return serializeVaultEntry(entry);
@@ -115,7 +115,7 @@ export async function deleteVaultEntry(
   return runMutation({
     schema: deleteVaultEntrySchema,
     input,
-    errorMessage: "Failed to delete vault entry",
+    errorMessage: "Failed to delete knowledge entry",
     revalidatePaths: VAULT_PATHS,
     handler: async ({ userId, input: data }) => {
       const entry = await VaultEntry.findOneAndDelete({
@@ -124,7 +124,7 @@ export async function deleteVaultEntry(
       });
 
       if (!entry) {
-        throw new Error("Vault entry not found");
+        throw new Error("Knowledge entry not found");
       }
 
       return { id: data.id };

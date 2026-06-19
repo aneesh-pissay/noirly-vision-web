@@ -63,7 +63,7 @@ export function executionScoreDisplay(
   }
 
   if (milestoneCount > 0) {
-    return { kind: "label", label: "Ready for execution" };
+    return { kind: "label", label: "Ready for actions" };
   }
 
   return { kind: "label", label: "Waiting for actions" };
@@ -74,7 +74,7 @@ export function focusScoreDisplay(
   sessionCount: number
 ): ProgressDisplay {
   if (sessionCount === 0 || score === null) {
-    return { kind: "label", label: "Ready — needs executable action" };
+    return { kind: "label", label: "Ready — needs an action" };
   }
   return { kind: "percent", value: score };
 }

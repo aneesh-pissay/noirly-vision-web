@@ -102,7 +102,7 @@ export function resolveGoalNextStep(state: GoalWorkflowState): {
         ? { title: "Create your first milestone" }
         : {
             title: "Add your first action",
-            description: "Connect milestones to executable work.",
+            description: "Connect milestones to actionable work.",
           };
     case "blocked":
       return {
@@ -111,7 +111,7 @@ export function resolveGoalNextStep(state: GoalWorkflowState): {
       };
     case "in_progress":
       return {
-        title: "Continue execution",
+        title: "Continue actions",
         description: "Pick up your in-progress action",
       };
   }

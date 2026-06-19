@@ -99,7 +99,7 @@ export function VisionHero({ vision, connectedGoalCount = 0 }: VisionHeroProps) 
             <h2 className="mt-4 text-lg font-semibold">No active vision</h2>
             <p className="mt-2 max-w-md text-sm text-muted-foreground">
               Create your first major vision to align goals, milestones, and daily
-              execution.
+              actions.
             </p>
             <Button className="mt-6 rounded-full" onClick={openCreate}>
               <Plus className="mr-2 h-4 w-4" />

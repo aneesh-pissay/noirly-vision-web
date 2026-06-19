@@ -1,26 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, GraduationCap, Palette, type LucideIcon } from "lucide-react";
+import { Briefcase, GraduationCap, Palette, type LucideIcon } from "lucide-react";
 
 const personas: { icon: LucideIcon; title: string; description: string }[] = [
   {
-    icon: Code2,
-    title: "Developers",
-    description:
-      "Ship projects with clear goals, focused sessions, and a record of what you learned.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Lifelong Learners",
-    description:
-      "Structure study goals, track progress, and keep notes in one place.",
+    icon: Briefcase,
+    title: "Professionals",
+    description: "Advance goals with structured execution.",
   },
   {
     icon: Palette,
     title: "Creators",
-    description:
-      "Move from ideas to execution while capturing lessons along the way.",
+    description: "Capture ideas and turn them into outcomes.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Lifelong Learners",
+    description: "Track learning and continuous improvement.",
   },
 ];
 
@@ -29,9 +26,11 @@ export function Personas() {
     <section className="border-t border-border/50 px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Built for builders</h2>
-          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-            A personal OS for people who create, learn, and ship.
+          <h2 className="hyphens-none text-balance text-3xl font-bold tracking-tight">
+            Built for intentional growth
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-pretty text-muted-foreground">
+            For people who want clarity, focus, and consistent progress.
           </p>
         </div>
 
@@ -48,8 +47,8 @@ export function Personas() {
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <persona.icon className="h-4 w-4" />
               </div>
-              <h3 className="mt-4 font-semibold">{persona.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <h3 className="mt-4 font-semibold hyphens-none">{persona.title}</h3>
+              <p className="mt-2 text-pretty text-sm text-muted-foreground">
                 {persona.description}
               </p>
             </motion.div>

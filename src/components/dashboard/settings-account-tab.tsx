@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProfilePageData } from "@/features/settings/types";
+import type { SettingsPageData } from "@/features/settings/types";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -49,7 +49,7 @@ function SaveButton({
   );
 }
 
-export function ProfileOverview({ data }: { data: ProfilePageData }) {
+export function SettingsAccountTab({ data }: { data: SettingsPageData }) {
   const router = useRouter();
   const { refreshUser } = useAuth();
   const [isPending, startTransition] = useTransition();
@@ -64,7 +64,7 @@ export function ProfileOverview({ data }: { data: ProfilePageData }) {
         toast.error(result.error ?? "Save failed");
         return;
       }
-      toast.success("Profile updated");
+      toast.success("Account updated");
       router.refresh();
     });
   }
@@ -72,17 +72,10 @@ export function ProfileOverview({ data }: { data: ProfilePageData }) {
   const initials = getUserInitials(profile.displayName);
 
   return (
-    <div className="space-y-6 pb-8">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Profile</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Manage your account identity and how you appear in Noirly.
-        </p>
-      </div>
-
+    <div className="space-y-4">
       <SettingSection
         title="Account"
-        description="Your personal information and public identity."
+        description="Your personal information and how you appear in Noirly."
         divided={false}
         contentClassName="space-y-5"
         actions={

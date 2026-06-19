@@ -19,6 +19,7 @@ import type { ActionResult } from "@/types";
 import type { MilestoneDTO } from "@/types/milestone";
 
 const MILESTONE_PATHS = [
+  "/milestones",
   "/dashboard/goals",
   "/dashboard/vision",
   "/dashboard/execution",

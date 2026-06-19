@@ -27,9 +27,9 @@ export default function TermsPage() {
         <ul className="list-disc space-y-2 pl-5">
           <li>Personal vision and long-term direction</li>
           <li>Goals and milestones</li>
-          <li>Daily execution and actions</li>
+          <li>Daily actions and task planning</li>
           <li>Focus sessions for deep work</li>
-          <li>Knowledge captured in your vault</li>
+          <li>Knowledge captured in your library</li>
         </ul>
         <p>
           Features may change as Noirly Vision evolves during early release.
@@ -65,7 +65,7 @@ export default function TermsPage() {
       <LegalSection title="6. Limitations">
         <p>
           Noirly Vision provides productivity tools to help you organize and
-          execute your work. It does not guarantee specific personal, career, or
+          carry out your work. It does not guarantee specific personal, career, or
           financial results. You use the product at your own discretion.
         </p>
       </LegalSection>

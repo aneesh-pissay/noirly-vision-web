@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export function ExecutionRightPanel() {
   return (
     <aside className="relative hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-border bg-background p-4 pb-20 xl:flex">
-      <h2 className="text-sm font-semibold">Execution Insights</h2>
+      <h2 className="text-sm font-semibold">Actions Insights</h2>
 
       <Card className="border-border bg-card">
         <CardContent className="flex gap-3 p-4">
@@ -17,7 +17,7 @@ export function ExecutionRightPanel() {
           <div>
             <p className="text-xs font-medium">Momentum</p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              You maintained focused execution 4 days this week.
+              You maintained focused action 4 days this week.
             </p>
           </div>
         </CardContent>

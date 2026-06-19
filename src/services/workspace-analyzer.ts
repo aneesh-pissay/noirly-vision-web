@@ -61,7 +61,7 @@ export async function analyzeWorkspace(userId: string) {
       type: "execution",
       title: "Build your roadmap",
       message:
-        "Add milestones to your goals so execution has a clear path forward.",
+        "Add milestones to your goals so actions have a clear path forward.",
       priority: "normal",
       channels: { inApp: true, push: false, email: false },
       relatedEntity: { type: "milestone", id: "none" },
